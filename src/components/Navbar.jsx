@@ -71,7 +71,7 @@ export default function Navbar() {
                       ? "text-[#ab8e66] dark:text-[#c5a880]"
                       : isScrolled
                         ? "text-[#555555] dark:text-[#a39e93] hover:text-[#000000] dark:hover:text-[#e2d9c2]"
-                        : "text-[#E2D9C2] hover:text-[#ab8e66]"
+                        : "text-[#6e6547] hover:text-[#ab8e66]"
                   }`}
                 >
                   {item.label}

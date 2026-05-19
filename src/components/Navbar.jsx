@@ -1,13 +1,23 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { GraduationCap, Menu, X, LogIn } from "lucide-react";
+import { GraduationCap, Menu, X, LogIn, Sun, Moon } from "lucide-react";
+import { useTheme } from "next-themes";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
   const pathname = usePathname();
+  const { theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
 
   const menuItems = [
     { label: "Home", path: "/" },
@@ -16,22 +26,21 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="bg-slate-950/80 backdrop-blur-md border-b border-slate-900 sticky top-0 z-50 text-slate-100">
+    <nav className="bg-slate-950/80 backdrop-blur-md border-b border-slate-900 sticky top-0 z-50 text-slate-100 transition-colors duration-300 dark:bg-slate-950/80 dark:text-slate-100 light:bg-white/80 light:text-slate-900 light:border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="shrink-0">
+          <div className="shrink-0 flex items-center">
             <Link
               href="/"
               className="flex items-center font-bold text-lg sm:text-xl tracking-wider select-none"
             >
               <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6 text-[#bfe3f9] shrink-0 z-10" />
-
               <img
                 src="/Logo.png"
                 alt="ZenStudy Logo"
                 width={180}
                 height={55}
-                className="object-contain max-h-8 sm:max-h-12 w-[130px] sm:w-[180px] -ml-3 sm:-ml-4 transition-all duration-200"
+                className="object-contain max-h-8 sm:max-h-12 w-32.5 sm:w-45 -ml-3 sm:-ml-4 transition-all duration-200"
               />
             </Link>
           </div>
@@ -51,7 +60,6 @@ export default function Navbar() {
                   }`}
                 >
                   {item.label}
-
                   <span
                     className={`absolute bottom-0 left-0 h-0.5 bg-linear-to-r from-[#ffb7ce] to-[#bfe3f9] transition-all duration-300 ${
                       isActive ? "w-full" : "w-0 group-hover:w-full"
@@ -62,7 +70,21 @@ export default function Navbar() {
             })}
           </div>
 
-          <div className="hidden sm:block">
+          <div className="hidden sm:flex items-center gap-4">
+            {mounted && (
+              <button
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="p-2 rounded-xl border border-slate-800 hover:bg-slate-900/50 text-[#bfe3f9] transition-all active:scale-95 cursor-pointer"
+                aria-label="Toggle Theme"
+              >
+                {theme === "dark" ? (
+                  <Sun className="w-4 h-4 text-[#ffb7ce]" />
+                ) : (
+                  <Moon className="w-4 h-4 text-[#c3b1e1]" />
+                )}
+              </button>
+            )}
+
             <Link
               href="/login"
               className="inline-flex items-center gap-2 px-5 py-2 text-sm font-semibold bg-linear-to-r from-[#ffb7ce] to-[#c3b1e1] text-slate-950 rounded-xl shadow-[0_4px_14px_rgba(255,183,206,0.3)] hover:shadow-[0_6px_20px_rgba(195,177,225,0.4)] hover:brightness-110 active:scale-95 transition-all duration-200"
@@ -72,7 +94,21 @@ export default function Navbar() {
             </Link>
           </div>
 
-          <div className="sm:hidden flex items-center">
+          <div className="sm:hidden flex items-center gap-2">
+            {mounted && (
+              <button
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="p-2 rounded-xl border border-slate-800 text-[#bfe3f9]"
+                aria-label="Toggle Theme"
+              >
+                {theme === "dark" ? (
+                  <Sun className="w-5 h-5 text-[#ffb7ce]" />
+                ) : (
+                  <Moon className="w-5 h-5 text-[#c3b1e1]" />
+                )}
+              </button>
+            )}
+
             <button
               onClick={() => setIsOpen(!isOpen)}
               type="button"
@@ -89,7 +125,9 @@ export default function Navbar() {
       </div>
 
       <div
-        className={`${isOpen ? "block" : "hidden"} sm:hidden bg-slate-950/95 border-b border-slate-900 backdrop-blur-lg`}
+        className={`${
+          isOpen ? "block" : "hidden"
+        } sm:hidden bg-slate-950/95 border-b border-slate-900 backdrop-blur-lg`}
       >
         <div className="px-3 pt-2 pb-4 space-y-2">
           {menuItems.map((item, index) => {

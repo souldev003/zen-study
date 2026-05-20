@@ -1,6 +1,13 @@
 import React from "react";
 import RoomCard from "@/components/UI/RoomCard";
 
+export const metadata = {
+  title: "All Rooms | Zen Study",
+  description:
+    "Explore and book our premium quiet study rooms tailored to your productivity needs.",
+  keywords: ["study room", "quiet space", "co-working", "booking", "zen study"],
+};
+
 const AllRoomsPage = async () => {
   const res = await fetch("http://localhost:5001/rooms", {
     cache: "no-store",

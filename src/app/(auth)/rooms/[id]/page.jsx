@@ -1,5 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
+import { EditRoom } from "@/components/EditRoom";
 import React from "react";
+
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  const res = await fetch(`http://localhost:5001/rooms/${id}`, {
+    cache: "no-store",
+  });
+  const room = await res.json();
+
+  return {
+    title: room?.name ? `${room.name} | Zen Study Room` : "Room Details",
+    description:
+      room?.description || "Book your premium study room at Zen Study.",
+  };
+}
 
 const PageDetails = async ({ params }) => {
   const { id } = await params;
@@ -109,9 +124,15 @@ const PageDetails = async ({ params }) => {
                 ))}
               </div>
 
-              <div className="mt-10">
-                <button className="cursor-pointer rounded-2xl bg-[#ab8e66] w-full px-8 py-4 text-lg font-semibold text-white transition-all duration-300 hover:scale-[1.03] hover:bg-[#947651]">
+              <div className="mt-10 flex flex-wrap items-center gap-4">
+                <button className="cursor-pointer rounded-2xl bg-[#ab8e66] px-6 py-4 text-white transition-all duration-300 hover:scale-[1.03] hover:bg-[#947651]">
                   Book Now
+                </button>
+
+                <EditRoom room={room} />
+
+                <button className="cursor-pointer rounded-2xl border border-[#d42d21] px-6 py-4 text-[#d42d21] transition-all duration-300 hover:bg-[#d42d21] hover:text-white">
+                  Delete
                 </button>
               </div>
             </div>

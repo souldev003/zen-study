@@ -53,7 +53,7 @@ const PageDetails = async ({ params }) => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-[#ab8e66] uppercase tracking-[3px]">
-                    StudyNook Room
+                    Zen Study Room
                   </p>
 
                   <h2 className="mt-2 text-3xl font-bold text-[#1a1a1a] dark:text-white">

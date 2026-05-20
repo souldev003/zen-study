@@ -2,6 +2,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import NextThemeProvider from "@/provider/NextThemeProvider";
 import Footer from "@/components/Footer";
+import { Toaster } from "react-hot-toast";
 
 export const metadata = {
   title: "ZenStudy – Home",
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
           <Navbar />
           {children}
           <Footer />
+          <Toaster position="top-right" />
         </NextThemeProvider>
       </body>
     </html>

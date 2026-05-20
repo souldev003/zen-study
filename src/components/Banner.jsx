@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const Banner = () => {
@@ -26,12 +27,12 @@ const Banner = () => {
 
         <div className="flex justify-between items-end text-[#e2d9c2] font-serif text-sm pb-2">
           <p className="opacity-70">Everyday 9:00 am – 8:00 pm</p>
-          <a
+          <Link
             href="/rooms"
             className="hover:text-[#c5a880] border-b border-[#e2d9c2]/50 hover:border-[#c5a880] uppercase tracking-widest transition"
           >
             View catalog →
-          </a>
+          </Link>
         </div>
       </div>
     </section>

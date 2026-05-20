@@ -1,4 +1,6 @@
 import Banner from "@/components/Banner";
+import ExperienceSection from "@/components/UI/ExperienceSection";
+import HowItWorks from "@/components/UI/HowItWorks";
 import RoomsGrid from "@/components/UI/RoomsGrid";
 import WhyChooseUs from "@/components/UI/WhyChooseUs";
 import { Suspense } from "react";
@@ -15,6 +17,8 @@ export default async function Home() {
       <Suspense fallback={<HashLoader size={60} color="#ab8e66" />}>
         <RoomsGrid rooms={LatestRoomsData} />
       </Suspense>
+      <ExperienceSection />
+      <HowItWorks />
     </div>
   );
 }

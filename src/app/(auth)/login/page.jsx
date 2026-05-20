@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Mail, Lock, ArrowRight } from "lucide-react";
 import toast from "react-hot-toast";
+import { FcGoogle } from "react-icons/fc";
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -28,13 +29,13 @@ export default function LoginPage() {
           <div className="relative w-full lg:w-1/2 h-65 sm:h-80 lg:h-auto">
             <img
               src="/LoginPageImage.jpg"
-              alt="StudyNook"
+              alt="Zen Study"
               className="w-full h-full object-cover"
             />
 
             <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/30 to-transparent flex flex-col justify-end p-6 sm:p-8 lg:p-12">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#f3d7a4] mb-3">
-                StudyNook
+                Zen Study
               </h2>
 
               <p className="text-sm sm:text-base lg:text-lg text-[#f5ead6]/80 leading-relaxed max-w-md">
@@ -133,28 +134,7 @@ export default function LoginPage() {
                   onClick={handleGoogleLogin}
                   className="w-full rounded-2xl border border-[#d8c1a0]/40 dark:border-[#3b3428] bg-white dark:bg-[#1c1f1d] hover:bg-[#f8f5ef] dark:hover:bg-[#222522] py-3.5 sm:py-4 px-4 font-semibold text-sm sm:text-base text-[#1a1a1a] dark:text-white transition-all duration-300 flex items-center justify-center gap-3"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 48 48"
-                    className="w-5 h-5"
-                  >
-                    <path
-                      fill="#FFC107"
-                      d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.7 1.1 7.8 3l5.7-5.7C34.1 6.1 29.4 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"
-                    />
-                    <path
-                      fill="#FF3D00"
-                      d="M6.3 14.7l6.6 4.8C14.7 16 19 13 24 13c3 0 5.7 1.1 7.8 3l5.7-5.7C34.1 6.1 29.4 4 24 4c-7.7 0-14.3 4.3-17.7 10.7z"
-                    />
-                    <path
-                      fill="#4CAF50"
-                      d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-8l-6.5 5C9.5 39.5 16.2 44 24 44z"
-                    />
-                    <path
-                      fill="#1976D2"
-                      d="M43.6 20.5H42V20H24v8h11.3c-1.1 3.1-3.3 5.5-6.1 7.1l6.2 5.2C39.7 36.4 44 30.8 44 24c0-1.3-.1-2.4-.4-3.5z"
-                    />
-                  </svg>
+                  <FcGoogle className="w-5 h-5" />
                   Continue with Google
                 </button>
               </form>

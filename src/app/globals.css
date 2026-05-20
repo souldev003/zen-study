@@ -1,8 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
 
 @import "tailwindcss";
-
 @import "@heroui/styles";
 
 @theme {
@@ -10,11 +8,23 @@
     --color-success: oklch(0.65 0.1 155);
 }
 
-
 .font-cinzel {
     font-family: 'Cinzel', serif;
 }
 
 .font-montserrat {
     font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Cinzel', serif;
 }

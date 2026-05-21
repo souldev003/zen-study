@@ -3,7 +3,14 @@
 import React from "react";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
 import { CancelRoomBooking } from "@/components/my-bookings/CancelRoomBooking";
+import { ConfirmRoomBooking } from "@/components/my-bookings/ConfirmRoomBooking";
+
+export const metadata = {
+  title: "Zen-Study | My Bookings",
+  description: "Manage your study room bookings easily in StudyNook dashboard.",
+};
 
 const MyBookingsPage = async () => {
   const session = await auth.api.getSession({
@@ -11,6 +18,10 @@ const MyBookingsPage = async () => {
   });
 
   const user = session?.user;
+
+  if (!user) {
+    redirect("/login");
+  }
 
   const res = await fetch(`http://localhost:5001/bookings/${user.id}`);
   const bookings = await res.json();
@@ -75,9 +86,10 @@ const MyBookingsPage = async () => {
                 <div className="flex flex-row lg:flex-col gap-3 lg:items-end w-full lg:w-auto">
                   {booking.status === "pending" && (
                     <>
-                      <button className="w-full lg:w-auto px-4 py-2 rounded-xl text-sm font-semibold bg-green-600 hover:bg-green-700 text-white transition">
+                      <ConfirmRoomBooking booking={booking} />
+                      {/* <button className="w-full lg:w-auto px-4 py-2 rounded-xl text-sm font-semibold bg-green-600 hover:bg-green-700 text-white transition">
                         Confirm
-                      </button>
+                      </button> */}
 
                       <CancelRoomBooking booking={booking} />
                     </>

@@ -32,8 +32,6 @@ export function EditRoom({ room, onUpdate }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { data: tokenData } = await authClient.token();
-
     const formData = new FormData(e.target);
 
     const updatedData = {
@@ -54,7 +52,6 @@ export function EditRoom({ room, onUpdate }) {
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
-          authorization: `Bearer ${tokenData?.token}`,
           body: JSON.stringify(updatedData),
         },
       );

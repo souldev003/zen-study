@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Zen Study - Room Booking Platform
+Zen Study is a modern, responsive web application designed for students and professionals to browse, book, and manage study rooms efficiently.
 
-## Getting Started
+🚀 Live Demo
+Check out the live application here: [https://zen-study-ten.vercel.app/](https://zen-study-ten.vercel.app/)
 
-First, run the development server:
+🛠 Features
+Browse Study Rooms: View available rooms with details like hourly rates and floor information.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+User Authentication: Secure login/signup using Google Authentication via Better Auth.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Easy Booking: Book rooms with customizable date, start time, and end time.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+My Bookings: Manage your bookings (Confirm/Cancel) in a dedicated dashboard.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Real-time Availability: Stay updated with your booking status.
 
-## Learn More
+Responsive Design: Fully optimized for desktops, tablets, and mobile devices.
 
-To learn more about Next.js, take a look at the following resources:
+💻 Tech Stack
+Frontend: Next.js, React, Tailwind CSS, Framer Motion
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Authentication: Better Auth (Google OAuth)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Backend: Node.js, Express.js
 
-## Deploy on Vercel
+Database: MongoDB
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Deployment: Vercel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+⚙️ Prerequisites
+Before running the project locally, ensure you have the following installed:
+
+Node.js (v18 or higher)
+
+npm or yarn
+
+MongoDB account (Atlas)
+
+🔧 Installation & Setup
+Clone the repository:
+
+Bash
+git clone https://github.com/souldev003/zen-study
+cd zen-study
+Install dependencies:
+
+Bash
+npm install
+Configure Environment Variables:
+Create a .env file in the root directory and add the following:
+
+🤝 Contributing
+Contributions are welcome! Feel free to open an issue or submit a pull request if you find any bugs or have feature suggestions.
+
+📝 License
+This project is licensed under the MIT License.
+
+Developed with ❤️ for a better study environment.

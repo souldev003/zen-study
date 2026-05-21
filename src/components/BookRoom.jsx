@@ -77,7 +77,7 @@ export const BookRoom = ({ room }) => {
         totalCost,
         note,
 
-        status: "confirmed",
+        status: "pending",
         createdAt: new Date(),
       };
 
@@ -96,7 +96,7 @@ export const BookRoom = ({ room }) => {
 
       toast.success("Room booked successfully!");
       setOpenModal(false);
-      setTimeout(() => router.push("/bookings"), 1000);
+      setTimeout(() => router.push("/my-bookings"), 1000);
     } catch (err) {
       toast.error("Something went wrong");
     } finally {

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
+import { useSession } from "@/lib/auth-client";
 
 const amenitiesOptions = [
   "Whiteboard",
@@ -15,6 +16,10 @@ const amenitiesOptions = [
 const AddRoomPage = () => {
   const [loading, setLoading] = useState(false);
   const [selectedAmenities, setSelectedAmenities] = useState([]);
+
+  const { data: session } = useSession();
+
+  const user = session?.user;
 
   const handleAmenityChange = (item) => {
     if (selectedAmenities.includes(item)) {
@@ -38,12 +43,19 @@ const AddRoomPage = () => {
       seatCapacity: Number(form.capacity.value),
       hourlyRate: Number(form.rate.value),
       amenities: selectedAmenities,
+
+      ownerId: user?.id,
+      ownerName: user?.name,
+      ownerEmail: user?.email,
+      ownerImage: user?.image,
+
+      createdAt: new Date(),
     };
 
     console.log(roomData);
 
     try {
-      const res = await fetch("http://localhost:5001/rooms", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/rooms`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

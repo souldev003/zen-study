@@ -49,12 +49,15 @@ export function EditRoom({ room, onUpdate }) {
     };
 
     try {
-      const res = await fetch(`http://localhost:5001/rooms/${room._id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        authorization: `Bearer ${tokenData?.token}`,
-        body: JSON.stringify(updatedData),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/rooms/${room._id}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          authorization: `Bearer ${tokenData?.token}`,
+          body: JSON.stringify(updatedData),
+        },
+      );
 
       if (res.ok) {
         setOpen(false);

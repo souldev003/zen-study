@@ -39,6 +39,7 @@ export default function Navbar() {
     { label: "Home", path: "/" },
     { label: "All Rooms", path: "/rooms" },
     { label: "My Bookings", path: "/my-bookings" },
+    { label: "My Rooms", path: "/my-rooms" },
   ];
 
   const isDark = theme === "dark";

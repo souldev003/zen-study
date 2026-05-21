@@ -8,13 +8,16 @@ import { authClient } from "@/lib/auth-client";
 export function DeleteRoom({ room }) {
   const handleDelete = async (id) => {
     const { data: tokenData } = await authClient.token();
-    const res = await fetch(`http://localhost:5001/rooms/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${tokenData?.token}`,
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/rooms/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${tokenData?.token}`,
+        },
       },
-    });
+    );
     const data = await res.json();
 
     if (data.deletedCount > 0) {

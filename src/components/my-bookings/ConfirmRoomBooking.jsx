@@ -14,7 +14,7 @@ export function ConfirmRoomBooking({ booking, onSuccess }) {
       setLoading(true);
 
       const res = await fetch(
-        `http://localhost:5001/bookings/${booking._id}/confirm`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/bookings/${booking._id}/confirm`,
         {
           method: "PATCH",
           headers: {

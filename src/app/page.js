@@ -7,7 +7,7 @@ import { Suspense } from "react";
 import { HashLoader } from "react-spinners";
 
 export default async function Home() {
-  const res = await fetch("http://localhost:5001/latest-rooms");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/latest-rooms`);
   const LatestRoomsData = await res.json();
 
   return (

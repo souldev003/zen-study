@@ -8,7 +8,7 @@ import { auth } from "@/lib/auth";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const res = await fetch(`http://localhost:5001/rooms/${id}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/rooms/${id}`, {
     cache: "no-store",
   });
   const room = await res.json();
@@ -24,12 +24,20 @@ const PageDetails = async ({ params }) => {
   const { token } = await auth.api.getToken({ headers: await headers() });
   const { id } = await params;
 
-  const res = await fetch(`http://localhost:5001/rooms/${id}`, {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  const user = session?.user;
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/rooms/${id}`, {
     headers: {
       authorization: `Bearer ${token}`,
     },
   });
   const room = await res.json();
+
+  const isOwner = user?.id === room?.ownerId;
 
   const {
     name,
@@ -134,9 +142,12 @@ const PageDetails = async ({ params }) => {
               <div className="mt-10 flex flex-wrap items-center gap-4">
                 <BookRoom room={room} />
 
-                <EditRoom room={room} />
-
-                <DeleteRoom room={room} />
+                {isOwner && (
+                  <>
+                    <EditRoom room={room} />
+                    <DeleteRoom room={room} />
+                  </>
+                )}
               </div>
             </div>
           </div>

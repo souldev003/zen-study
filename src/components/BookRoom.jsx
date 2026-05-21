@@ -43,6 +43,8 @@ export const BookRoom = ({ room }) => {
   const handleBooking = async (e) => {
     e.preventDefault();
 
+    const { data: tokenData } = await authClient.token();
+
     if (!bookingDate) {
       toast.error("Please select booking date");
       return;
@@ -83,7 +85,10 @@ export const BookRoom = ({ room }) => {
 
       const res = await fetch("http://localhost:5001/bookings", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${tokenData?.token}`,
+        },
         body: JSON.stringify(bookingData),
       });
 
@@ -110,7 +115,7 @@ export const BookRoom = ({ room }) => {
         onClick={handleBookNow}
         className="w-full sm:w-auto cursor-pointer rounded-2xl bg-[#ab8e66] px-5 sm:px-6 py-3 sm:py-4 text-white text-sm sm:text-base transition hover:bg-[#947651] hover:scale-[1.02]"
       >
-        {user ? "Book Now" : "Login to Book"}
+        Book Now
       </button>
 
       {openModal && (

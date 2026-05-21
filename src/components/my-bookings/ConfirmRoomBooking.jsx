@@ -3,11 +3,13 @@
 import { AlertDialog, Button } from "@heroui/react";
 import toast from "react-hot-toast";
 import { useState } from "react";
+import { authClient } from "@/lib/auth-client";
 
 export function ConfirmRoomBooking({ booking, onSuccess }) {
   const [loading, setLoading] = useState(false);
 
   const handleConfirm = async () => {
+    const { data: tokenData } = await authClient.token();
     try {
       setLoading(true);
 
@@ -17,6 +19,7 @@ export function ConfirmRoomBooking({ booking, onSuccess }) {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+            authorization: `Bearer ${tokenData?.token}`,
           },
         },
       );

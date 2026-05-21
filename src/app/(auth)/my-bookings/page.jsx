@@ -3,7 +3,7 @@
 import React from "react";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 import { CancelRoomBooking } from "@/components/my-bookings/CancelRoomBooking";
 import { ConfirmRoomBooking } from "@/components/my-bookings/ConfirmRoomBooking";
 
@@ -13,17 +13,22 @@ export const metadata = {
 };
 
 const MyBookingsPage = async () => {
+  const { token } = await auth.api.getToken({ headers: await headers() });
   const session = await auth.api.getSession({
     headers: await headers(),
   });
 
   const user = session?.user;
 
-  if (!user) {
-    redirect("/login");
-  }
+  // if (!user) {
+  //   redirect("/login");
+  // }
 
-  const res = await fetch(`http://localhost:5001/bookings/${user.id}`);
+  const res = await fetch(`http://localhost:5001/bookings/${user.id}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
   const bookings = await res.json();
 
   return (

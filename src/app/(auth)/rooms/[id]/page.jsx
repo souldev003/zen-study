@@ -3,6 +3,8 @@ import { BookRoom } from "@/components/BookRoom";
 import { DeleteRoom } from "@/components/DeleteRoom";
 import { EditRoom } from "@/components/EditRoom";
 import React from "react";
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
@@ -19,10 +21,13 @@ export async function generateMetadata({ params }) {
 }
 
 const PageDetails = async ({ params }) => {
+  const { token } = await auth.api.getToken({ headers: await headers() });
   const { id } = await params;
 
   const res = await fetch(`http://localhost:5001/rooms/${id}`, {
-    cache: "no-store",
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
   });
   const room = await res.json();
 

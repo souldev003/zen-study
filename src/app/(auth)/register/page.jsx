@@ -18,14 +18,12 @@ const RegisterPage = () => {
     e.preventDefault();
     setError("");
 
-    // FormData ব্যবহার করে ফর্ম ডাটা নেওয়া
     const formData = new FormData(e.currentTarget);
     const name = formData.get("name");
     const email = formData.get("email");
     const photoURL = formData.get("photoURL");
     const password = formData.get("password");
 
-    // পাসওয়ার্ড ভ্যালিডেশন
     if (password.length < 6)
       return setError("Password must be at least 6 characters.");
     if (!/[A-Z]/.test(password))
@@ -55,7 +53,6 @@ const RegisterPage = () => {
 
   const handleGoogleRegister = async () => {
     try {
-      // Better Auth Google Auth call
       await authClient.signIn.social({
         provider: "google",
       });

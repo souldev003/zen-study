@@ -7,7 +7,7 @@ import { Mail, Lock, ArrowRight, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
-import { authClient } from "@/lib/auth-client"; // আপনার authClient ইমপোর্ট করুন
+import { authClient } from "@/lib/auth-client";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -140,7 +140,7 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={handleGoogleLogin}
-                  className="w-full rounded-2xl border border-[#d8c1a0]/40 bg-white dark:bg-[#1c1f1d] py-3.5 font-semibold text-sm flex items-center justify-center gap-3"
+                  className="cursor-pointer w-full rounded-2xl border border-[#d8c1a0]/40 bg-white dark:bg-[#1c1f1d] py-3.5 font-semibold text-sm flex items-center justify-center gap-3"
                 >
                   <FcGoogle className="w-5 h-5" /> Continue with Google
                 </button>

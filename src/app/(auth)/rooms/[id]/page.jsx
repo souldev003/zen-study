@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { BookRoom } from "@/components/BookRoom";
 import { DeleteRoom } from "@/components/DeleteRoom";
 import { EditRoom } from "@/components/EditRoom";
 import React from "react";
@@ -126,9 +127,7 @@ const PageDetails = async ({ params }) => {
               </div>
 
               <div className="mt-10 flex flex-wrap items-center gap-4">
-                <button className="cursor-pointer rounded-2xl bg-[#ab8e66] px-6 py-4 text-white transition-all duration-300 hover:scale-[1.03] hover:bg-[#947651]">
-                  Book Now
-                </button>
+                <BookRoom room={room} />
 
                 <EditRoom room={room} />
 

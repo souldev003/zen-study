@@ -4,9 +4,10 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Menu, X, LogIn, Sun, Moon } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { Menu, X, LogIn, Sun, Moon, LogOut } from "lucide-react";
 import { useTheme } from "next-themes";
+import { authClient } from "@/lib/auth-client";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,12 +15,23 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const pathname = usePathname();
+  const router = useRouter();
+
   const { theme, setTheme } = useTheme();
+
+  const { data: session, isPending } = authClient.useSession();
+
+  const user = session?.user;
 
   useEffect(() => {
     setMounted(true);
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
     window.addEventListener("scroll", handleScroll);
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -30,6 +42,16 @@ export default function Navbar() {
   ];
 
   const isDark = theme === "dark";
+
+  const handleLogout = async () => {
+    try {
+      await authClient.signOut();
+
+      router.push("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <nav
@@ -62,6 +84,7 @@ export default function Navbar() {
           <div className="hidden sm:flex items-center gap-8">
             {menuItems.map((item, index) => {
               const isActive = pathname === item.path;
+
               return (
                 <Link
                   key={index}
@@ -75,11 +98,12 @@ export default function Navbar() {
                   }`}
                 >
                   {item.label}
+
                   <span
                     className={`absolute bottom-0 left-0 h-[1.5px] bg-[#ab8e66] dark:bg-[#c5a880] transition-all duration-300 ${
                       isActive ? "w-full" : "w-0 group-hover:w-full"
                     }`}
-                  ></span>
+                  />
                 </Link>
               );
             })}
@@ -106,13 +130,50 @@ export default function Navbar() {
               </button>
             )}
 
-            <Link
-              href="/login"
-              className="inline-flex items-center gap-2 px-5 py-2 text-sm font-serif font-semibold rounded-xl transition-all duration-300 active:scale-95 shadow-sm bg-[#ab8e66] text-[#131514] hover:bg-[#967b56] hover:text-[#fbf9f4] dark:bg-[#c5a880] dark:text-[#131514] dark:hover:bg-[#d6be9a]"
-            >
-              <span className="tracking-wide">Login</span>
-              <LogIn className="w-4 h-4 text-current transition-transform duration-200 group-hover:translate-x-0.5" />
-            </Link>
+            {!isPending && user ? (
+              <div className="flex items-center gap-3">
+                <div className="cursor-pointer flex items-center gap-3 px-3 py-1.5 rounded-xl border border-[#c5a880]/20 bg-[#fbf9f4]/80 dark:bg-[#1a1c1b]/80 dark:border-[#c5a880]/10">
+                  <img
+                    src={
+                      user.image ||
+                      "https://cdn.vectorstock.com/i/500p/46/76/gray-male-head-placeholder-vector-23804676.jpg"
+                    }
+                    alt={user.name}
+                    className="w-10 h-10 rounded-full object-cover border-2 border-[#c5a880]/40"
+                  />
+
+                  <div className="flex flex-col leading-tight">
+                    <span className="text-sm font-semibold text-[#333333] dark:text-white">
+                      {user.name}
+                    </span>
+
+                    <span className="text-xs text-[#8b7d62] dark:text-[#bca98a]">
+                      {user.email}
+                    </span>
+                  </div>
+                </div>
+
+                <button
+                  onClick={handleLogout}
+                  className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 text-sm font-serif font-semibold rounded-xl transition-all duration-300 active:scale-95 shadow-sm bg-red-500 text-white hover:bg-red-600"
+                >
+                  <span>Logout</span>
+
+                  <LogOut className="w-4 h-4" />
+                </button>
+              </div>
+            ) : (
+              !isPending && (
+                <Link
+                  href="/login"
+                  className="cursor-pointer inline-flex items-center gap-2 px-5 py-2 text-sm font-serif font-semibold rounded-xl transition-all duration-300 active:scale-95 shadow-sm bg-[#ab8e66] text-[#131514] hover:bg-[#967b56] hover:text-[#fbf9f4] dark:bg-[#c5a880] dark:text-[#131514] dark:hover:bg-[#d6be9a]"
+                >
+                  <span className="tracking-wide">Login</span>
+
+                  <LogIn className="w-4 h-4 text-current" />
+                </Link>
+              )
+            )}
           </div>
 
           <div className="sm:hidden flex items-center gap-3">
@@ -156,14 +217,38 @@ export default function Navbar() {
         } sm:hidden backdrop-blur-lg border-b transition-colors duration-300 bg-[#fbf9f4]/95 border-[#c5a880]/20 dark:bg-[#131514]/95 dark:border-[#c5a880]/10`}
       >
         <div className="px-3 pt-2 pb-4 space-y-1.5">
+          {!isPending && user && (
+            <div className="cursor-pointer flex items-center gap-3 px-4 py-3 mb-3 rounded-2xl bg-[#c5a880]/10 dark:bg-[#c5a880]/5">
+              <img
+                src={
+                  user.image ||
+                  "https://www.shutterstock.com/image-vector/isolated-object-avatar-dummy-symbol-260nw-1290290470.jpg"
+                }
+                alt={user.name}
+                className="w-12 h-12 rounded-full object-cover border-2 border-[#c5a880]/40"
+              />
+
+              <div>
+                <h3 className="font-semibold text-[#333333] dark:text-white">
+                  {user.name}
+                </h3>
+
+                <p className="text-sm text-[#8b7d62] dark:text-[#bca98a]">
+                  {user.email}
+                </p>
+              </div>
+            </div>
+          )}
+
           {menuItems.map((item, index) => {
             const isActive = pathname === item.path;
+
             return (
               <Link
                 key={index}
                 href={item.path}
                 onClick={() => setIsOpen(false)}
-                className={`block px-4 py-2.5 rounded-xl text-base font-serif font-medium transition-all ${
+                className={`cursor-pointer block px-4 py-2.5 rounded-xl text-base font-serif font-medium transition-all ${
                   isActive
                     ? "text-[#ab8e66] bg-[#c5a880]/10 border-l-4 border-[#ab8e66] dark:text-[#c5a880] dark:bg-[#c5a880]/5 dark:border-[#c5a880]"
                     : "text-[#333333] hover:text-[#ab8e66] hover:bg-[#c5a880]/5 dark:text-slate-300 dark:hover:text-[#c5a880]"
@@ -175,14 +260,28 @@ export default function Navbar() {
           })}
 
           <div className="pt-4 pb-2 px-4 border-t border-[#c5a880]/20 dark:border-[#c5a880]/10">
-            <Link
-              href="/login"
-              onClick={() => setIsOpen(false)}
-              className="flex items-center justify-center gap-2 w-full text-center px-4 py-2.5 text-sm font-serif font-semibold rounded-xl transition-all duration-200 bg-[#ab8e66] text-[#131514] hover:bg-[#967b56] hover:text-[#fbf9f4] dark:bg-[#c5a880] dark:text-[#131514]"
-            >
-              <span>Login</span>
-              <LogIn className="w-4 h-4" />
-            </Link>
+            {!isPending && user ? (
+              <button
+                onClick={handleLogout}
+                className="cursor-pointer flex items-center justify-center gap-2 w-full text-center px-4 py-2.5 text-sm font-serif font-semibold rounded-xl transition-all duration-200 bg-red-500 text-white hover:bg-red-600"
+              >
+                <span>Logout</span>
+
+                <LogOut className="w-4 h-4" />
+              </button>
+            ) : (
+              !isPending && (
+                <Link
+                  href="/login"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center justify-center gap-2 w-full text-center px-4 py-2.5 text-sm font-serif font-semibold rounded-xl transition-all duration-200 bg-[#ab8e66] text-[#131514] hover:bg-[#967b56] hover:text-[#fbf9f4] dark:bg-[#c5a880] dark:text-[#131514]"
+                >
+                  <span>Login</span>
+
+                  <LogIn className="w-4 h-4" />
+                </Link>
+              )
+            )}
           </div>
         </div>
       </div>

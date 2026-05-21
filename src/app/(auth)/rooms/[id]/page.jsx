@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { DeleteRoom } from "@/components/DeleteRoom";
 import { EditRoom } from "@/components/EditRoom";
 import React from "react";
 
@@ -131,9 +132,7 @@ const PageDetails = async ({ params }) => {
 
                 <EditRoom room={room} />
 
-                <button className="cursor-pointer rounded-2xl border border-[#d42d21] px-6 py-4 text-[#d42d21] transition-all duration-300 hover:bg-[#d42d21] hover:text-white">
-                  Delete
-                </button>
+                <DeleteRoom room={room} />
               </div>
             </div>
           </div>
